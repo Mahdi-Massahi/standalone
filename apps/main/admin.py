@@ -34,7 +34,6 @@ class ApplicationAdmin(admin.ModelAdmin):
         "state",
         "contact_name",
         "model_modified_at",
-        "ending",
     )
     readonly_fields = (
         "model_modified_at",
