@@ -9,18 +9,27 @@ class UserAdmin(BaseUserAdmin):
         "email",
         "first_name",
         "last_name",
-        "is_staff",
     )
-    # fieldsets = BaseUserAdmin.fieldsets + (
-    #     (
-    #         "Custom fields",
-    #         {
-    #             "fields": (
-    #                 "custom_fields",
-    #             ),
-    #         },
-    #     ),
-    # )
+    fieldsets = BaseUserAdmin.fieldsets + (
+        (
+            "Custom fields",
+            {
+                "fields": (
+                    "bio",
+                    "phone",
+                    "location",
+                    "company",
+                    "linkedin",
+                    "github",
+                    "website",
+                    "summary",
+                    "languages",
+                    "soft_skills",
+                    "hard_skills",
+                ),
+            },
+        ),
+    )
 
 
 admin.site.register(User, UserAdmin)

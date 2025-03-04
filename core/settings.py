@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     #
     "apps.authentication",
+    "apps.main",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
