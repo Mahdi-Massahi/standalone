@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
 import apps.main.models as MODELS
-from commons.utils import truncate
 
 
 @admin.register(MODELS.Experience)
