@@ -13,3 +13,4 @@ class User(AbstractUser):
     languages = models.JSONField(default=dict)
     soft_skills = models.JSONField(default=dict)
     hard_skills = models.JSONField(default=dict)
+    hobbies = models.JSONField(default=dict)

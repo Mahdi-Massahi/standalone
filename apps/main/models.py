@@ -1,7 +1,3 @@
-import os
-from datetime import datetime
-
-from core.settings import MEDIA_ROOT
 from apps.commons.models import BaseModel, models
 from apps.authentication.models import User
 
@@ -12,6 +8,7 @@ class Experience(BaseModel):
         PART_TIME = "PRT", "Part-time"
         SELF_EMPLOYED = "SFE", "Self-employed"
         CONTRACT = "CNT", "Contract"
+        EXTRACURRICULAR = "EXT", "Extracurricular"
 
     class Category(models.TextChoices):
         EDUCATION = "EDU", "Education"
@@ -25,8 +22,8 @@ class Experience(BaseModel):
     type = models.CharField(max_length=3, choices=Type.choices)
     category = models.CharField(max_length=3, choices=Category.choices)
     url = models.CharField(max_length=1024, blank=True, null=True)
-    starting = models.DateTimeField()
-    ending = models.DateTimeField(null=True, blank=True)
+    starting = models.DateField()
+    ending = models.DateField(null=True, blank=True)
     description = models.TextField()
 
 
@@ -67,15 +64,11 @@ class Tailor(BaseModel):
         CV = "CV", "CV"
         ML = "ML", "ML"
 
-    def get_unique_filename(instance: "Tailor", filename):
-        folder_name = "tailor"
-        time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        unique_filename = f"{instance.application.user.get_full_name()} {time.year}"
-        upload_path = os.path.join(MEDIA_ROOT, folder_name, unique_filename)
-        return upload_path
-
     application = models.ForeignKey(Application, models.CASCADE)
     type = models.CharField(max_length=2, choices=Type.choices)
     latex = models.TextField(blank=True, null=True)
     instruction = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to=get_unique_filename, blank=True, null=True)
+    file = models.FileField(blank=True, null=True)
+    fitness = models.IntegerField(blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+    meta = models.JSONField(default=dict, blank=True, null=True)

@@ -5,17 +5,20 @@ import apps.main.models as MODELS
 
 class TailorInline(admin.StackedInline):
     model = MODELS.Tailor
-    extra = 2
-    max_num = 2
+    extra = 0
     show_change_link = True
     fields = [
         "id",
         "type",
-        "latex",
         "instruction",
+        "latex",
+        "comment",
+        "fitness",
+        "meta",
         "file",
     ]
     readonly_fields = (
+        "file",
         "model_modified_at",
         "model_created_at",
     )
