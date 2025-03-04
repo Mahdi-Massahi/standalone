@@ -11,12 +11,9 @@ class Command(BaseCommand):
         User = get_user_model()
 
         superuser_username = os.getenv("DJANGO_SUPERUSER_USERNAME")
-        superuser_email = os.getenv("DJANGO_SUPERUSER_EMAIL")
         superuser_password = os.getenv("DJANGO_SUPERUSER_PASSWORD")
         if superuser_username and superuser_password:
-            superuser, _ = User.objects.get_or_create(
-                username=superuser_username, email=superuser_email
-            )
+            superuser, _ = User.objects.get_or_create(username=superuser_username)
             superuser.is_staff = True
             superuser.is_superuser = True
             superuser.is_active = True
