@@ -59,7 +59,7 @@ class Application(BaseModel):
     contact_name = models.CharField(max_length=128, blank=True, null=True)
     contact_number = models.CharField(max_length=128, blank=True, null=True)
     contact_email = models.EmailField(blank=True, null=True)
-    note = models.TextField(default="")
+    note = models.TextField(blank=True, null=True)
 
 
 class Tailor(BaseModel):
@@ -76,5 +76,6 @@ class Tailor(BaseModel):
 
     application = models.ForeignKey(Application, models.CASCADE)
     type = models.CharField(max_length=2, choices=Type.choices)
-    latex = models.TextField()
-    file = models.FileField(upload_to=get_unique_filename)
+    latex = models.TextField(blank=True, null=True)
+    instruction = models.TextField(blank=True, null=True)
+    file = models.FileField(upload_to=get_unique_filename, blank=True, null=True)
