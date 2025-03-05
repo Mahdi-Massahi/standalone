@@ -8,6 +8,7 @@ from jinja2 import Template
 
 class CVTemplate(str, Enum):
     TEMPLATE_00 = "temp_00"
+    TEMPLATE_01 = "temp_01"
 
 
 def __get_template_path(template: CVTemplate) -> str:

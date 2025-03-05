@@ -24,8 +24,8 @@ def tailor_cv(tailor: MODELS.Tailor):
             location=exp.location,
             description=exp.description,
             url=exp.url,
-            starting=exp.starting,
-            ending=exp.ending,
+            starting=exp.starting.strftime("%Y %b").upper() if exp.starting else None,
+            ending=exp.ending.strftime("%Y %b").upper() if exp.ending else None,
         )
         for exp in experiences
         if exp.category == MODELS.Experience.Category.CARRIER
@@ -38,8 +38,8 @@ def tailor_cv(tailor: MODELS.Tailor):
             location=exp.location,
             description=exp.description,
             url=exp.url,
-            starting=exp.starting,
-            ending=exp.ending,
+            starting=exp.starting.strftime("%Y %b").upper() if exp.starting else None,
+            ending=exp.ending.strftime("%Y %b").upper() if exp.ending else None,
         )
         for exp in experiences
         if exp.category == MODELS.Experience.Category.EDUCATION
@@ -52,8 +52,8 @@ def tailor_cv(tailor: MODELS.Tailor):
             location=exp.location,
             description=exp.description,
             url=exp.url,
-            starting=exp.starting,
-            ending=exp.ending,
+            starting=exp.starting.strftime("%Y %b").upper() if exp.starting else None,
+            ending=exp.ending.strftime("%Y %b").upper() if exp.ending else None,
         )
         for exp in experiences
         if exp.category == MODELS.Experience.Category.PROJECT
@@ -78,7 +78,7 @@ def tailor_cv(tailor: MODELS.Tailor):
         instruction=tailor.instruction,
     )
 
-    cv_template = CVTemplate.TEMPLATE_00
+    cv_template = CVTemplate.TEMPLATE_01
 
     latex_content = generate(
         cv_template=cv_template,
@@ -91,7 +91,7 @@ def tailor_cv(tailor: MODELS.Tailor):
     meta = get_agent_generate_cv_meta()
     meta["response"] = str(response)
 
-    tailor.instruction = ""
+    tailor.instruction = None
     tailor.latex = latex_content
     tailor.comment = response.comment
     tailor.fitness = response.fitness
@@ -99,7 +99,7 @@ def tailor_cv(tailor: MODELS.Tailor):
 
     # Generate a unique filename based on CV id and timestamp
     filename = (
-        f"cv_{tailor.application.user.first_name}_"
+        f"{tailor.application.user.first_name}_"
         f"{tailor.application.user.last_name}_"
         f"{datetime.now().strftime('%Y-%m-%d-%H-%M')}.pdf"
     )

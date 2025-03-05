@@ -1,10 +1,9 @@
 from pydantic import BaseModel
-from datetime import date
 
 
 class ExperienceModel(BaseModel):
-    starting: date | None
-    ending: date | None
+    starting: str | None
+    ending: str | None
     title: str
     type: str | None
     role: str

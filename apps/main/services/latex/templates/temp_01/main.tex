@@ -1,0 +1,123 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot,
+    top=2 cm,
+    bottom=2 cm,
+    left=2 cm,
+    right=2 cm,
+    footskip=1.0 cm,
+]{geometry} 
+\usepackage[explicit]{titlesec} 
+\usepackage{tabularx} 
+\usepackage{array} 
+\usepackage[dvipsnames]{xcolor} 
+\definecolor{primaryblue}{RGB}{0, 79, 144} 
+\definecolor{secondary_text}{HTML}{535353} 
+\usepackage{enumitem} 
+\usepackage{fontawesome5} 
+\usepackage{amsmath} 
+\usepackage[
+    pdftitle={[[user.first_name]] [[user.last_name]]'s CV},
+    pdfauthor={[[user.first_name]] [[user.last_name]]},
+    colorlinks=true,
+    urlcolor=primaryblue
+]{hyperref} 
+\usepackage{bookmark} 
+\usepackage{lastpage} 
+\usepackage{changepage} 
+\usepackage{paracol} 
+\usepackage{ifthen} 
+\usepackage{needspace} 
+\usepackage{iftex} 
+
+\usepackage[default, type1]{sourcesanspro} 
+
+% Formatting settings
+\pagestyle{empty} 
+\setcounter{secnumdepth}{0} 
+\setlength{\parindent}{0pt} 
+\setlength{\topskip}{0pt} 
+\setlength{\columnsep}{0.15cm} 
+
+\titleformat{\section}{
+    \needspace{4\baselineskip}
+    \Large\color{primaryblue}
+}{
+}{
+}{
+    \textbf{#1}\hspace{0.15cm}\titlerule[0.8pt]\hspace{-0.1cm}
+}[]
+
+\titlespacing{\section}{-1pt}{0.3 cm}{0.2 cm} 
+
+\newcommand{\location}[1]{\mbox{\color{secondary_text}\faMapMarker* \ #1}}
+\newcommand{\type}[1]{{\small{\color{primaryblue}#1}}}
+\newcommand{\dates}[1]{\hfill\mbox{\textit{\small{\color{primaryblue}#1}}}}
+\newcommand{\titlerole}[1]{\textbf{\small{#1}}}
+\newcommand{\highlight}[1]{\textcolor{\small{#1}}}
+
+\begin{document}
+    \begin{center}
+        {\Huge{[[user.first_name]]}} {\Huge\textbf{[[user.last_name]]}}\\
+        {\large\textbf{[[cv.title]]}}\\
+        \vspace{0.5cm}
+        \location{[[user.location]]} \textcolor{secondary_text}{•} \href{mailto:[[user.email]]}{[[user.email]]} \textcolor{secondary_text}{•} \href{tel:[[user.phone]]}{[[user.phone]]}\\
+        \href{https://[[user.linkedin]]}{\faLinkedin \ [[user.linkedin]]} \textcolor{secondary_text}{•} \href{https://[[user.github]]}{\faGithub \ [[user.github]]} \textcolor{secondary_text}{•} \href{https://[[user.website]]}{\faGlobe \ [[user.website]]} \\
+    \end{center}
+    \vspace{0.5cm}
+
+    % SUMMARY
+    \section{SUMMARY}
+    \textit{[[cv.summary]]}
+
+    % WORK EXPERIENCE
+    [[$ if cv.carriers $]]
+        \section{WORK EXPERIENCE}
+        [[$ for carrier in cv.carriers $]]
+            \location{[[carrier.location]]} \textcolor{secondary_text}{•} \type{[[carrier.type]]} [[$ if carrier.url $]] \textcolor{secondary_text}{•} \href{https://[[carrier.url]]}{[[carrier.url]]} [[$ endif $]] \dates{[[carrier.starting]] to [[$ if carrier.ending $]][[carrier.ending]][[$ else $]] PRESENT [[$ endif $]]}  \\
+            \titlerole{[[carrier.title]] | [[carrier.role]]} \\
+            \small{[[carrier.description]]}
+            \vspace{0.2cm}
+        [[$ endfor $]]
+    [[$ endif $]]
+
+    % PROJECTS
+    [[$ if cv.projects $]]
+        \section{PROJECTS}
+        [[$ for project in cv.projects $]]
+            \location{[[project.location]]} \textcolor{secondary_text}{•} \type{[[project.type]]} [[$ if project.url $]] \textcolor{secondary_text}{•} \href{https://[[project.url]]}{[[project.url]]} [[$ endif $]] \dates{[[project.starting]] to [[$ if project.ending $]][[project.ending]][[$ else $]] PRESENT [[$ endif $]]} \\
+            \titlerole{[[project.title]] | [[project.role]]} \\
+            \small{[[project.description]]}
+            \vspace{0.2cm}
+        [[$ endfor $]]
+    [[$ endif $]]
+
+    % SKILLS
+    [[$ if cv.hard_skills $]]
+        \section{SKILLS}
+        [[$ for soft_skills in cv.soft_skills $]][[soft_skills]] \textcolor{gray}{•} [[$ endfor $]] \\
+        [[$ for hard_skills in cv.hard_skills $]][[hard_skills]] \textcolor{gray}{•} [[$ endfor $]] 
+    [[$ endif $]]
+
+    % EDUCATION
+    [[$ if cv.educations $]]
+        \section{EDUCATION}
+        [[$ for education in cv.educations $]]
+            \location{[[education.location]]} \dates{[[education.starting]] to [[education.ending]]} \\
+            \titlerole{[[education.title]] | [[education.role]]} \\
+            \small{[[education.description]]}
+            \vspace{0.2cm}
+        [[$ endfor $]]
+    [[$ endif $]]
+
+    % LANGUAGES
+    [[$ if user.languages $]]
+        \section{LANGUAGES}
+        [[$ for language in user.languages $]]
+            {[[language.language]]}: {[[language.level]]}  
+        [[$ endfor $]]
+    [[$ endif $]]
+
+\end{document}
